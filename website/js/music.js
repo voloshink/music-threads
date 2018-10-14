@@ -66,30 +66,36 @@ function submissionsLine() {
             type: 'line'
         },
         title: {
-            text: 'Submissions Per Thread'
+            text: 'Thread Stats'
         },
         xAxis: {
             categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
         },
         yAxis: {
-            title: {
-                text: 'Submissions'
-            }
+            // title: {
+            //     text: 'Submissions'
+            // }
         },
         legend: {
-            enabled: false,
+            enabled: true,
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size: 10px">Thread {point.key}</span><br/>',
         },
         plotOptions: {
             line: {
                 dataLabels: {
                     enabled: true
                 },
-                enableMouseTracking: false
+                enableMouseTracking: true
             }
         },
         series: [{
             name: 'Submissions',
             data: [32, 22, 42, 12, 11, 22, 50, 27, 29, 10, 17, 25]
+        }, {
+            name: 'Views',
+            data: [33, 422, 442, 122, 311, 222, 450, 327, 229, 110, 317, 425]
         }]
     });
 }
