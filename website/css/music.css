@@ -2,6 +2,11 @@
     height: 600px;
 }
 
+h1 {
+    color: white;
+    text-align: center;
+}
+
 body {
     background-color: #373739;
 }
