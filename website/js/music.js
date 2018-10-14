@@ -1,4 +1,5 @@
 var genreBarChart;
+var submissionLineChart;
 var activeUserBarChart;
 var upvotedUserBarChart;
 
@@ -6,6 +7,7 @@ $(function () {
     genreBar();
     activeUsersBar();
     upvotedUsersBar();
+    submissionsLine();
 })
 
 function genreBar() {
@@ -54,6 +56,40 @@ function genreBar() {
         series: [{
             name: 'Submissions',
             data: [50, 45, 24, 10, 2]
+        }]
+    });
+}
+
+function submissionsLine() {
+    submissionLineChart = Highcharts.chart('submission-line', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Submissions Per Thread'
+        },
+        xAxis: {
+            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+        },
+        yAxis: {
+            title: {
+                text: 'Submissions'
+            }
+        },
+        legend: {
+            enabled: false,
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Submissions',
+            data: [32, 22, 42, 12, 11, 22, 50, 27, 29, 10, 17, 25]
         }]
     });
 }
