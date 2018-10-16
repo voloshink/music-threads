@@ -18,6 +18,7 @@ $(function () {
     $('#genre-title').text(capitalize(genre));
     listSubmissions(submissions);
     popularityLine();
+    genrePie();
 })
 
 /**
@@ -58,7 +59,7 @@ function listSubmissions(submissions) {
     }
 }
 
-function popularityLine() {
+function popularityLine(genre) {
 submissionLineChart = Highcharts.chart('genre-popularity', {
         chart: {
             type: 'line'
@@ -90,4 +91,47 @@ submissionLineChart = Highcharts.chart('genre-popularity', {
             data: [32, 22, 42, 12, 11, 22, 50, 27, 29, 10, 17, 25]
         }]
     });
+}
+
+function genrePie() {
+    Highcharts.chart('genre-pie', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Genre Propotion'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Submissions',
+        colorByPoint: true,
+        data: [{
+            name: genre,
+            y: 5,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Other',
+            y: 95
+        }]
+    }]
+});
 }
