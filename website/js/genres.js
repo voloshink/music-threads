@@ -17,6 +17,7 @@ $(function () {
     };
     $('#genre-title').text(capitalize(genre));
     listSubmissions(submissions);
+    popularityLine();
 })
 
 /**
@@ -55,4 +56,38 @@ function listSubmissions(submissions) {
         var html = template(submission);
         container.append(html);
     }
+}
+
+function popularityLine() {
+submissionLineChart = Highcharts.chart('genre-popularity', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Popularity by Thread'
+        },
+        xAxis: {
+            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+        },
+        yAxis: {
+        },
+        legend: {
+            enabled: false,
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size: 10px">Thread {point.key}</span><br/>',
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+            name: 'Submissions',
+            data: [32, 22, 42, 12, 11, 22, 50, 27, 29, 10, 17, 25]
+        }]
+    });
 }
