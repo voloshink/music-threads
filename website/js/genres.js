@@ -46,6 +46,7 @@ const submissions = [sampleSubmission1, sampleSubmission1, sampleSubmission1, sa
 const genreJson = {
     submissions: submissions,
     latestThread: 48,
+    genreProportion: 5,
 };
 
 let submissionLineChart;
@@ -125,7 +126,7 @@ function popularityLine(subs, latestThread) {
     });
 }
 
-function genrePie(genre) {
+function genrePie(genre, proportion) {
     Highcharts.chart('genre-pie', {
         chart: {
             plotBackgroundColor: null,
@@ -157,12 +158,12 @@ function genrePie(genre) {
             colorByPoint: true,
             data: [{
                 name: genre,
-                y: 5,
+                y: proportion,
                 sliced: true,
                 selected: true,
             }, {
                 name: 'Other',
-                y: 95,
+                y: 100 - proportion,
             }],
         }],
     });
@@ -178,5 +179,5 @@ $(() => {
     $('#genre-title').text(capitalize(genre));
     listSubmissions(genreJson.submissions);
     popularityLine(genreJson.submissions, genreJson.latestThread);
-    genrePie(genre);
+    genrePie(genre, genreJson.genreProportion);
 });
