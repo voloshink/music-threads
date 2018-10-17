@@ -102,6 +102,7 @@ function popularityLine(subs, latestThread) {
             categories: data.map((_, i) => i),
         },
         yAxis: {
+            allowDecimals: false,
         },
         legend: {
             enabled: false,
