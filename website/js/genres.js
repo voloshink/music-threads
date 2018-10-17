@@ -7,7 +7,7 @@ const sampleSubmission1 = {
     artist: 'Some Artist',
     threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 47,
-    trackUrl: 'https://www.youtube.com/'
+    trackUrl: 'https://www.youtube.com/',
 };
 
 const sampleSubmission2 = {
@@ -17,7 +17,7 @@ const sampleSubmission2 = {
     artist: 'Some Artist',
     threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 46,
-    trackUrl: 'https://www.youtube.com/'
+    trackUrl: 'https://www.youtube.com/',
 };
 
 const sampleSubmission3 = {
@@ -27,7 +27,7 @@ const sampleSubmission3 = {
     artist: 'Some Artist',
     threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 45,
-    trackUrl: 'https://www.youtube.com/'
+    trackUrl: 'https://www.youtube.com/',
 };
 
 const sampleSubmission4 = {
@@ -37,7 +37,7 @@ const sampleSubmission4 = {
     artist: 'Some Artist',
     threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 44,
-    trackUrl: 'https://www.youtube.com/'
+    trackUrl: 'https://www.youtube.com/',
 };
 
 const submissions = [sampleSubmission1, sampleSubmission1, sampleSubmission1, sampleSubmission2, sampleSubmission2, sampleSubmission2, sampleSubmission2, sampleSubmission3, sampleSubmission3, sampleSubmission4];
@@ -87,19 +87,19 @@ function listSubmissions(subs) {
 function popularityLine(subs, latestThread) {
     const data = Array(latestThread).fill(0);
 
-    for (let i = 0; i < submissions.length(); i++) {
-        data[submissions[i].threadNum]++;
+    for (const submission of subs) {
+        data[submission.threadNum]++;
     }
 
     submissionLineChart = Highcharts.chart('genre-popularity', {
         chart: {
-            type: 'line'
+            type: 'line',
         },
         title: {
-            text: 'Popularity by Thread'
+            text: 'Popularity by Thread',
         },
         xAxis: {
-            categories: data.map()
+            categories: data.map((_, i) => i),
         },
         yAxis: {
         },
@@ -112,15 +112,15 @@ function popularityLine(subs, latestThread) {
         plotOptions: {
             line: {
                 dataLabels: {
-                    enabled: true
+                    enabled: true,
                 },
-                enableMouseTracking: true
-            }
+                enableMouseTracking: true,
+            },
         },
         series: [{
             name: 'Submissions',
-            data: [32, 22, 42, 12, 11, 22, 50, 27, 29, 10, 17, 25]
-        }]
+            data: data,
+        }],
     });
 }
 
@@ -130,13 +130,13 @@ function genrePie(genre) {
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
-            type: 'pie'
+            type: 'pie',
         },
         title: {
-            text: 'Genre Propotion'
+            text: 'Genre Propotion',
         },
         tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
         },
         plotOptions: {
             pie: {
@@ -146,10 +146,10 @@ function genrePie(genre) {
                     enabled: true,
                     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
                     style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+                    },
+                },
+            },
         },
         series: [{
             name: 'Submissions',
@@ -158,12 +158,12 @@ function genrePie(genre) {
                 name: genre,
                 y: 5,
                 sliced: true,
-                selected: true
+                selected: true,
             }, {
                 name: 'Other',
-                y: 95
-            }]
-        }]
+                y: 95,
+            }],
+        }],
     });
 }
 
