@@ -40,7 +40,7 @@ const sampleSubmission4 = {
     trackUrl: 'https://www.youtube.com/',
 };
 
-const submissions = [sampleSubmission1, sampleSubmission1, sampleSubmission1, sampleSubmission2, sampleSubmission2, sampleSubmission2, sampleSubmission2, sampleSubmission3, sampleSubmission3, sampleSubmission4];
+const submissions = [sampleSubmission1, sampleSubmission2, sampleSubmission1, sampleSubmission3, sampleSubmission3, sampleSubmission2, sampleSubmission2, sampleSubmission1, sampleSubmission3, sampleSubmission4];
 
 // stuff that i will need from the api
 const genreJson = {
@@ -75,11 +75,11 @@ function capitalize(string) {
 }
 
 function listSubmissions(subs) {
+    const sortedSubmissions = subs.sort((a, b) => a.threadNum < b.threadNum);
     const container = $('#submission-list');
     const source = document.getElementById('submissions-template').innerHTML;
     const template = Handlebars.compile(source);
-    for (let i = 0; i < subs.length; i++) {
-        const submission = submissions[i];
+    for (const submission of sortedSubmissions) {
         const html = template(submission);
         container.append(html);
     }
