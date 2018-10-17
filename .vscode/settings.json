@@ -1,0 +1,6 @@
+{
+    "eslint.options": {
+        "configFile": "C:/Users/polecat/projects/music-threads/.eslintrc.js"
+    },
+    "eslint.enable": true
+}

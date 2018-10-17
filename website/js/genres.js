@@ -1,25 +1,54 @@
-var sampleSubmission1 = {
-    user: "tehpolecat",
-    userUrl: "https://www.reddit.com/user/tehpolecat",
-    song: "Song Name",
-    artist: "Some Artist",
-    threadUrl: "https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/",
-    threadNum: 47,
-    trackUrl: "https://www.youtube.com/"
-};
-var submissions = [sampleSubmission1, sampleSubmission1, sampleSubmission1]
+/* global Handlebars, Highcharts*/
 
-$(function () {
-    params = getParams(window.location.href);
-    genre = params['genre'];
-    if (!genre) {
-        window.location.href = '../index.html';
-    };
-    $('#genre-title').text(capitalize(genre));
-    listSubmissions(submissions);
-    popularityLine();
-    genrePie();
-})
+const sampleSubmission1 = {
+    user: 'tehpolecat',
+    userUrl: 'https://www.reddit.com/user/tehpolecat',
+    song: 'Song Name',
+    artist: 'Some Artist',
+    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    threadNum: 47,
+    trackUrl: 'https://www.youtube.com/'
+};
+
+const sampleSubmission2 = {
+    user: 'tehpolecat',
+    userUrl: 'https://www.reddit.com/user/tehpolecat',
+    song: 'Song Name',
+    artist: 'Some Artist',
+    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    threadNum: 46,
+    trackUrl: 'https://www.youtube.com/'
+};
+
+const sampleSubmission3 = {
+    user: 'tehpolecat',
+    userUrl: 'https://www.reddit.com/user/tehpolecat',
+    song: 'Song Name',
+    artist: 'Some Artist',
+    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    threadNum: 45,
+    trackUrl: 'https://www.youtube.com/'
+};
+
+const sampleSubmission4 = {
+    user: 'tehpolecat',
+    userUrl: 'https://www.reddit.com/user/tehpolecat',
+    song: 'Song Name',
+    artist: 'Some Artist',
+    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    threadNum: 44,
+    trackUrl: 'https://www.youtube.com/'
+};
+
+const submissions = [sampleSubmission1, sampleSubmission1, sampleSubmission1, sampleSubmission2, sampleSubmission2, sampleSubmission2, sampleSubmission2, sampleSubmission3, sampleSubmission3, sampleSubmission4];
+
+// stuff that i will need from the api
+const genreJson = {
+    submissions: submissions,
+    latestThread: 48,
+};
+
+let submissionLineChart;
 
 /**
  * Get the URL parameters
@@ -27,40 +56,42 @@ $(function () {
  * @param  {String} url The URL
  * @return {Object}     The URL parameters
  */
-var getParams = function (url) {
-    var params = {};
-    var parser = document.createElement('a');
+function getParams(url) {
+    const params = {};
+    const parser = document.createElement('a');
     parser.href = url;
-    var query = parser.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
+    const query = parser.search.substring(1);
+    const vars = query.split('&');
+    for (let i = 0; i < vars.length; i++) {
+        const pair = vars[i].split('=');
         params[pair[0]] = decodeURIComponent(pair[1]);
     }
     return params;
-};
+}
 
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-function escape(string) {
-    return string.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function listSubmissions(submissions) {
-    var container = $('#submission-list');
-    var source = document.getElementById("submissions-template").innerHTML;
-    var template = Handlebars.compile(source);
-    for (var i = 0; i < submissions.length; i++) {
-        var submission = submissions[i];
-        var html = template(submission);
+function listSubmissions(subs) {
+    const container = $('#submission-list');
+    const source = document.getElementById('submissions-template').innerHTML;
+    const template = Handlebars.compile(source);
+    for (let i = 0; i < subs.length; i++) {
+        const submission = submissions[i];
+        const html = template(submission);
         container.append(html);
     }
 }
 
-function popularityLine(genre) {
-submissionLineChart = Highcharts.chart('genre-popularity', {
+function popularityLine(subs, latestThread) {
+    const data = Array(latestThread).fill(0);
+
+    for (let i = 0; i < submissions.length(); i++) {
+        data[submissions[i].threadNum]++;
+    }
+
+    submissionLineChart = Highcharts.chart('genre-popularity', {
         chart: {
             type: 'line'
         },
@@ -68,7 +99,7 @@ submissionLineChart = Highcharts.chart('genre-popularity', {
             text: 'Popularity by Thread'
         },
         xAxis: {
-            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+            categories: data.map()
         },
         yAxis: {
         },
@@ -93,45 +124,58 @@ submissionLineChart = Highcharts.chart('genre-popularity', {
     });
 }
 
-function genrePie() {
+function genrePie(genre) {
     Highcharts.chart('genre-pie', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Genre Propotion'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Genre Propotion'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
                 }
             }
-        }
-    },
-    series: [{
-        name: 'Submissions',
-        colorByPoint: true,
-        data: [{
-            name: genre,
-            y: 5,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Other',
-            y: 95
+        },
+        series: [{
+            name: 'Submissions',
+            colorByPoint: true,
+            data: [{
+                name: genre,
+                y: 5,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Other',
+                y: 95
+            }]
         }]
-    }]
-});
+    });
 }
+
+
+$(() => {
+    const params = getParams(window.location.href);
+    const genre = params.genre;
+    if (!genre) {
+        window.location.href = '../index.html';
+    }
+    $('#genre-title').text(capitalize(genre));
+    listSubmissions(genreJson.submissions);
+    popularityLine(genreJson.submissions, genreJson.latestThread);
+    genrePie(genre);
+});
