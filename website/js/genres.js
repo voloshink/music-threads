@@ -179,5 +179,5 @@ $(() => {
     $('#genre-title').text(capitalize(genre));
     listSubmissions(genreJson.submissions);
     popularityLine(genreJson.submissions, genreJson.latestThread);
-    genrePie(genre, genreJson.genreProportion);
+    genrePie(capitalize(genre), genreJson.genreProportion);
 });
