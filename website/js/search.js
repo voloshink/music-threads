@@ -5,7 +5,7 @@ const genres = [{ name: 'rock', id: 1, }, { name: 'post-rock', id: 2, }, { name:
 const json = { artists: artists, users: users, genres: genres, };
 
 function redirectToRelative(url) {
-    let redirectUrl = encodeURIComponent(url);
+    let redirectUrl = url;
     // web server for testing? now that's just too much work, writing custom navigation is way easier
     if (window.location.origin === 'file://') {
         if (window.location.href.indexOf('index.html') > -1) {
@@ -29,7 +29,7 @@ function redirectToRelative(url) {
 function selected(item) {
     let redirectUrl = '';
     if (item.type === 'genre') {
-        redirectUrl = 'genres.html?genre=' + item.id;
+        redirectUrl = 'genres.html?genre=' + encodeURIComponent(item.id);
     }
 
     redirectToRelative(redirectUrl);
@@ -44,7 +44,7 @@ $(() => {
         event.preventDefault();
 
         const query = $('#search').val().trim();
-        redirectToRelative('search?q=' + query);
+        redirectToRelative('search?q=' + encodeURIComponent(query));
     });
 
     const data = [];

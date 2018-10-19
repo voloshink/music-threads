@@ -12,7 +12,9 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="../js/bootstrap3-typeahead.min.js"></script>
     <script src="../js/dark-unica.js"></script>
+    <script src="../js/search.js"></script>
     <script src="../js/genres.js"></script>
     <link href="../css/music.css" rel="stylesheet" type="text/css">
 </head>
@@ -29,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="../index.html">Home</a>
+                    <a class="nav-link" href="index.html">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -40,8 +42,9 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="User/Artist/Song/Genre" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" id="search-form">
+                <input id="search" class="form-control mr-sm-2" type="search" autocomplete="off" placeholder="User/Artist/Song/Genre"
+                    aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
