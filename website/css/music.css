@@ -10,3 +10,7 @@ h1 {
 body {
     background-color: #373739;
 }
+
+.typeahead > .active {
+    background-color: #2b908f;
+}

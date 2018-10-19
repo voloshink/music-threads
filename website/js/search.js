@@ -30,5 +30,5 @@ $(() => {
         return x;
     }));
 
-    $('#search').typeahead({ source: data, minLength: 3, afterSelect: selected, displayText: displayText, changeInputOnMove: true, changeInputOnSelect: true, autoSelect: false, });
+    $('#search').typeahead({ source: data, minLength: 3, afterSelect: selected, displayText: displayText, changeInputOnMove: false, changeInputOnSelect: false, autoSelect: false, });
 });
