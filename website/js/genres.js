@@ -44,6 +44,8 @@ const submissions = [sampleSubmission1, sampleSubmission2, sampleSubmission1, sa
 
 // stuff that i will need from the api
 const genreJson = {
+    genreName: 'rock',
+    genreId: 2,
     submissions: submissions,
     latestThread: 48,
     genreProportion: 5,
@@ -172,12 +174,13 @@ function genrePie(genre, proportion) {
 
 $(() => {
     const params = getParams(window.location.href);
-    const genre = params.genre;
-    if (!genre) {
+    const genreId = params.genre;
+    if (!genreId) {
         window.location.href = '../index.html';
     }
-    $('#genre-title').text(capitalize(genre));
+    // perform a look-up by id to get genreJson
+    $('#genre-title').text(capitalize(genreJson.genreName));
     listSubmissions(genreJson.submissions);
     popularityLine(genreJson.submissions, genreJson.latestThread);
-    genrePie(capitalize(genre), genreJson.genreProportion);
+    genrePie(capitalize(genreJson.genreName), genreJson.genreProportion);
 });
