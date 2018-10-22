@@ -50,6 +50,8 @@ const submissions = [sampleSubmission1, sampleSubmission2, sampleSubmission1, sa
 const userJson = {
     userName: 'tehpolecat',
     userId: 2,
+    upvotes: 50,
+    posts: 21,
     submissions: submissions,
     latestThread: 48,
 };
@@ -193,6 +195,10 @@ $(() => {
     }
     // perform a look-up by id to get userJson
     $('#user-title').text(capitalize(userJson.userName));
+    $('#upvotes').text(userJson.upvotes);
+    $('#posts').text(userJson.posts);
+    $('#reddit-link').attr('href', 'https://www.reddit.com/user/' + userJson.userName);
+    $('[data-toggle="tooltip"]').tooltip();
     listSubmissions(userJson.submissions);
     activityBar(userJson.submissions, userJson.latestThread);
     genrePie(userJson.submissions);

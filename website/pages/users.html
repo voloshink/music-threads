@@ -8,6 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
         crossorigin="anonymous"></script>
     <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+        crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
@@ -51,7 +53,16 @@
     </nav>
 
     <div id="main-container" class="container-fluid">
-        <h1 id="user-title">User</h1>
+        <h1><span id="user-title"></span><a class="info-icon" id="reddit-link"><i class="fab fa-reddit-alien"></i></a></h1>
+        <div class="row">
+            <div class="col-sm">
+                <h2><i class="fas fa-arrow-up upvote info-icon" data-toggle="tooltip" title="Number of Upvotes"></i><span
+                        id="upvotes"></span></h2>
+            </div>
+            <div class="col-sm">
+                <h2><i class="fas fa-hashtag info-icon" data-toggle="tooltip" title="Number of Posts"></i><span id="posts"></span></h2>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm">
                 <div class="list-group" id="submission-list"></div>
