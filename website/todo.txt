@@ -1,6 +1,0 @@
-What to have on the dashboard:
-Search (artist/song)
-Stats - user (submissions, upvotes), artist (submissions), genres (submissions)
-Stats - Overall, per thread
-List of all playlists
-Link to most recent thread
