@@ -48,7 +48,7 @@ const submissions = [sampleSubmission1, sampleSubmission2, sampleSubmission1, sa
 
 // stuff that i will need from the api
 const artistJson = {
-    artistsName: 'Artist',
+    artistName: 'Artist',
     artistId: 2,
     submissions: submissions,
     latestThread: 48,
@@ -193,7 +193,7 @@ $(() => {
     }
     // perform a look-up by id to get userJson
     $('#artist-title').text(capitalize(artistJson.artistName));
-    $('#submissions').text(artistJson.submissions.length());
+    $('#submissions').text(artistJson.submissions.length);
     $('[data-toggle="tooltip"]').tooltip();
     listSubmissions(artistJson.submissions);
     activityBar(artistJson.submissions, artistJson.latestThread);

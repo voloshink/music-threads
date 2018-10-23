@@ -34,6 +34,9 @@ function selected(item) {
     if (item.type === 'user') {
         redirectUrl = 'users.html?user=' + encodeURIComponent(item.id);
     }
+    if (item.type === 'artist') {
+        redirectUrl = 'artists.html?artist=' + encodeURIComponent(item.id);
+    }
 
     redirectToRelative(redirectUrl);
 }
