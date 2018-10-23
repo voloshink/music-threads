@@ -187,8 +187,8 @@ function genrePie(subs) {
 
 $(() => {
     const params = getParams(window.location.href);
-    const userId = params.user;
-    if (!userId) {
+    const artistId = params.artist;
+    if (!artistId) {
         window.location.href = '../index.html';
     }
     // perform a look-up by id to get userJson
