@@ -27,3 +27,11 @@ body {
     margin-right: 10px;
     margin-left: 10px;
 }
+
+.thread-badge {
+    margin-right: 5px;
+}
+
+.user-badge{
+    margin-left: 5px;
+}

@@ -11,7 +11,7 @@ function listSubmissions(containerSelector, subs) {
     }
 
     const container = $(containerSelector);
-    const source = '<li class="list-group-item list-group-item-action"><a href="{{threadUrl}}"><span class="badge badge-secondary">Thread {{threadNum}}</span></a><a href="{{genreUrl}}">[{{genre}}]</a><a href="{{artistUrl}}">{{artist}} </a>-<a href="{{trackUrl}}"> {{song}}</a> submitted by<a href="{{userUrl}}"><span class="badge badge-info">/u/{{user}}</span></a></li>';
+    const source = '<li class="list-group-item list-group-item-action"><a href="{{threadUrl}}"><span class="badge badge-secondary thread-badge">Thread {{threadNum}}</span></a><a href="{{genreUrl}}">[{{genre}}]</a><a href="{{artistUrl}}">{{artist}} </a>-<a href="{{trackUrl}}"> {{song}}</a> submitted by<a href="{{userUrl}}"><span class="badge badge-info user-badge">/u/{{user}}</span></a></li>';
     const template = Handlebars.compile(source);
     for (const submission of sortedSubmissions) {
         const html = template(submission);
