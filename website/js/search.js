@@ -4,7 +4,7 @@ const genres = [{ name: 'rock', id: 1, }, { name: 'post-rock', id: 2, }, { name:
 
 const json = { artists: artists, users: users, genres: genres, };
 
-function redirectToRelative(url) {
+function getRelativeUrl(url) {
     let redirectUrl = url;
     // web server for testing? now that's just too much work, writing custom navigation is way easier
     if (window.location.origin === 'file://') {
@@ -22,7 +22,11 @@ function redirectToRelative(url) {
         }
     }
 
-    window.location.href = redirectUrl;
+    return redirectUrl;
+}
+
+function redirectToRelative(url) {
+    window.location.href = getRelativeUrl(url);
 }
 
 
