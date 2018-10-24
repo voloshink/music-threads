@@ -1,41 +1,49 @@
-/* global Highcharts, listSubmissions*/
+/* global Highcharts, Handlebars listSubmissions*/
 
 const sampleSubmission1 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
+    userId: 10,
+    genre: 'Rock',
+    genreId: 2,
+    artistId: 3,
     song: 'Song Name',
     artist: 'Some Artist',
-    genre: 'Rock',
     threadNum: 47,
     trackUrl: 'https://www.youtube.com/',
 };
 
 const sampleSubmission2 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
+    userId: 10,
+    genreId: 2,
+    genre: 'EDM',
+    artistId: 3,
     artist: 'Some Artist',
-    genre: 'Rock',
     threadNum: 46,
     trackUrl: 'https://www.youtube.com/',
 };
 
 const sampleSubmission3 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
+    userId: 10,
+    genreId: 2,
+    genre: 'Pop',
+    artistId: 3,
     artist: 'Some Artist',
-    genre: 'Rock',
     threadNum: 45,
     trackUrl: 'https://www.youtube.com/',
 };
 
 const sampleSubmission4 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
+    userId: 10,
+    genreId: 2,
+    artistId: 3,
+    genre: 'Hip-hop',
     artist: 'Some Artist',
-    genre: 'Rock',
     threadNum: 44,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -74,17 +82,6 @@ function getParams(url) {
 
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function listSubmissions(subs) {
-    const sortedSubmissions = subs.sort((a, b) => a.threadNum < b.threadNum);
-    const container = $('#submission-list');
-    const source = document.getElementById('submissions-template').innerHTML;
-    const template = Handlebars.compile(source);
-    for (const submission of sortedSubmissions) {
-        const html = template(submission);
-        container.append(html);
-    }
 }
 
 function popularityLine(subs, latestThread) {

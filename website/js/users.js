@@ -2,8 +2,10 @@
 
 const sampleSubmission1 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
+    userId: 10,
     genre: 'Rock',
+    genreId: 2,
+    artistId: 3,
     song: 'Song Name',
     artist: 'Some Artist',
     threadNum: 47,
@@ -12,9 +14,11 @@ const sampleSubmission1 = {
 
 const sampleSubmission2 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
+    userId: 10,
+    genreId: 2,
     genre: 'EDM',
+    artistId: 3,
     artist: 'Some Artist',
     threadNum: 46,
     trackUrl: 'https://www.youtube.com/',
@@ -22,9 +26,11 @@ const sampleSubmission2 = {
 
 const sampleSubmission3 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
+    userId: 10,
+    genreId: 2,
     genre: 'Pop',
+    artistId: 3,
     artist: 'Some Artist',
     threadNum: 45,
     trackUrl: 'https://www.youtube.com/',
@@ -32,8 +38,10 @@ const sampleSubmission3 = {
 
 const sampleSubmission4 = {
     user: 'tehpolecat',
-    userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
+    userId: 10,
+    genreId: 2,
+    artistId: 3,
     genre: 'Hip-hop',
     artist: 'Some Artist',
     threadNum: 44,
