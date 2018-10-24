@@ -2,7 +2,8 @@ const artists = [{ name: 'Old Chum', id: 1, }, { name: 'ヨルシカ', id: 2, },
 const users = [{ name: 'tehpolecat', id: 1, }, { name: 'Boondock9099', id: 2, }, { name: 'Wafthrudnir', id: 3, }, { name: 'nablachez', id: 4, }, { name: 'Peckhead', id: 5, }];
 const genres = [{ name: 'rock', id: 1, }, { name: 'post-rock', id: 2, }, { name: 'noise punk', id: 3, }, { name: 'indie rock', id: 4, }, { name: 'pop punk', id: 5, }];
 
-const json = { artists: artists, users: users, genres: genres, };
+const json = { artists: artists, users: users, genres: genres, latestThread: 48, };
+const threads = Array(json.latestThread).fill(0).map((_, i) => { return { name: 'Thread ' + (i + 1), id: (i + 1), }; });
 
 function getRelativeUrl(url) {
     let redirectUrl = url;
@@ -42,6 +43,10 @@ function selected(item) {
         redirectUrl = 'artists.html?artist=' + encodeURIComponent(item.id);
     }
 
+    if (item.type === 'thread') {
+        redirectUrl = 'threads.html?thread=' + encodeURIComponent(item.id);
+    }
+
     redirectToRelative(redirectUrl);
 }
 
@@ -70,6 +75,11 @@ $(() => {
 
     data.push(...json.genres.map(x => {
         x.type = 'genre';
+        return x;
+    }));
+
+    data.push(...threads.map(x => {
+        x.type = 'thread';
         return x;
     }));
 
