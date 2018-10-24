@@ -1,4 +1,4 @@
-/* global Handlebars, Highcharts*/
+/* global Highcharts listSubmissions*/
 
 const sampleSubmission1 = {
     user: 'tehpolecat',
@@ -6,7 +6,6 @@ const sampleSubmission1 = {
     genre: 'Rock',
     song: 'Song Name',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 47,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -17,7 +16,6 @@ const sampleSubmission2 = {
     song: 'Song Name',
     genre: 'EDM',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 47,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -28,7 +26,6 @@ const sampleSubmission3 = {
     song: 'Song Name',
     genre: 'Pop',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 47,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -39,7 +36,6 @@ const sampleSubmission4 = {
     song: 'Song Name',
     genre: 'Hip-hop',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
     threadNum: 47,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -75,17 +71,6 @@ function getParams(url) {
 
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function listSubmissions(subs) {
-    const sortedSubmissions = subs.sort((a, b) => a.threadNum < b.threadNum);
-    const container = $('#submission-list');
-    const source = document.getElementById('submissions-template').innerHTML;
-    const template = Handlebars.compile(source);
-    for (const submission of sortedSubmissions) {
-        const html = template(submission);
-        container.append(html);
-    }
 }
 
 function activityBar(subs, latestThread) {
@@ -195,7 +180,7 @@ $(() => {
     $('#thread-number').text(threadNumber);
     $('#submissions').text(threadJson.submissions.length);
     $('[data-toggle="tooltip"]').tooltip();
-    listSubmissions(threadJson.submissions);
+    listSubmissions('#submission-list', threadJson.submissions);
     // activityBar(artistJson.submissions, artistJson.latestThread);
     genrePie(threadJson.submissions);
 });

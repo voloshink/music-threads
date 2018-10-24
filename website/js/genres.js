@@ -1,11 +1,11 @@
-/* global Handlebars, Highcharts*/
+/* global Highcharts, listSubmissions*/
 
 const sampleSubmission1 = {
     user: 'tehpolecat',
     userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    genre: 'Rock',
     threadNum: 47,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -15,7 +15,7 @@ const sampleSubmission2 = {
     userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    genre: 'Rock',
     threadNum: 46,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -25,7 +25,7 @@ const sampleSubmission3 = {
     userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    genre: 'Rock',
     threadNum: 45,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -35,7 +35,7 @@ const sampleSubmission4 = {
     userUrl: 'https://www.reddit.com/user/tehpolecat',
     song: 'Song Name',
     artist: 'Some Artist',
-    threadUrl: 'https://www.reddit.com/r/Destiny/comments/9mnr30/the_biweekly_music_sharing_thread_47/',
+    genre: 'Rock',
     threadNum: 44,
     trackUrl: 'https://www.youtube.com/',
 };
@@ -180,7 +180,7 @@ $(() => {
     }
     // perform a look-up by id to get genreJson
     $('#genre-title').text(capitalize(genreJson.genreName));
-    listSubmissions(genreJson.submissions);
+    listSubmissions('#submission-list', genreJson.submissions);
     popularityLine(genreJson.submissions, genreJson.latestThread);
     genrePie(capitalize(genreJson.genreName), genreJson.genreProportion);
 });
