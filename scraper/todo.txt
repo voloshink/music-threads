@@ -1,0 +1,1 @@
+2 scripts: 1 to parse the reddit threads and store them in a json file (this is to allow me to manually clean up input since not all comments will be in the format i want), 2 to put the json results into the db
