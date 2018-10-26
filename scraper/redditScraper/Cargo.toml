@@ -1,0 +1,6 @@
+[package]
+name = "redditScraper"
+version = "0.1.0"
+authors = ["Kirill Voloshin <voloshin.k@husky.neu.edu>"]
+
+[dependencies]
