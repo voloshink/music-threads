@@ -59,7 +59,7 @@ $(() => {
         event.preventDefault();
 
         const query = $('#search').val().trim();
-        redirectToRelative('search?q=' + encodeURIComponent(query));
+        redirectToRelative('search.html?q=' + encodeURIComponent(query));
     });
 
     const data = [];
