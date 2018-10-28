@@ -7,20 +7,23 @@ extern crate serde_derive;
 
 mod config;
 
-use rawr::prelude::*;
 use config::Config;
+use rawr::prelude::*;
+use std::fs::File;
+use std::io::prelude::*;
 
-static CONFIG_FILE = "../Config.toml";
+static CONFIG_FILE: &str = "Config.toml";
 
 fn main() {
     println!("Hello, world!");
+    let config = load_config();
 }
 
 fn load_config() -> Config {
     let mut f = File::open(CONFIG_FILE).expect("config file not found");
     let mut contents = String::new();
-    f.read_to_string(&mut contents).expect("error reading the config file");
+    f.read_to_string(&mut contents)
+        .expect("error reading the config file");
 
-    let config: Config = toml::decode_str(contents).expect("error deserializing config");
-    config
+    toml::from_str(&mut contents).expect("error deserializing config")
 }
