@@ -13,10 +13,21 @@ use std::fs::File;
 use std::io::prelude::*;
 
 static CONFIG_FILE: &str = "Config.toml";
+static USER: &str = "tehpolecat";
 
 fn main() {
     println!("Hello, world!");
     let config = load_config();
+    let client = RedditClient::new(&config.reddit_user_agent, AnonymousAuthenticator::new());
+    let user = client.user(USER);
+    let submissions = user.submissions().expect("error getting user submissions");
+    let mut i = 0;
+    for submission in submissions {
+        i += 1;
+        println!("{}", submission.title());
+    }
+
+    println!("{}", i);
 }
 
 fn load_config() -> Config {
