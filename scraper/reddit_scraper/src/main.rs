@@ -41,6 +41,7 @@ fn main() {
 
     let mut target = 0;
     let mut target_thread: Option<rawr::structures::submission::Submission<'_>> = None;
+    let mut next_thread: Option<rawr::structures::submission::Submission<'_>> = None;
     for submission in submissions {
         let title = String::from(submission.title());
         match re.captures(&title) {
@@ -54,13 +55,6 @@ fn main() {
                     Some(n_match) => n_match.as_str().parse::<i32>().unwrap_or(1),
                 };
 
-                println!(
-                    "{}, {}",
-                    get_spotify(&submission.body().unwrap_or("coudn't get body".to_string()))
-                        .unwrap_or("url not found"),
-                    thread_num
-                );
-
                 if target_thread_num == 0 {
                     if thread_num > target {
                         target = thread_num;
@@ -70,6 +64,8 @@ fn main() {
                     target = thread_num;
                     target_thread = Some(submission);
                     break;
+                } else if target_thread_num + 1 == thread_num {
+                    next_thread = Some(submission);
                 }
             }
         }
@@ -83,7 +79,7 @@ fn main() {
     };
     println!("{:?}", mu_thread);
     let body = target_thread.body().expect("Error getting thread body");
-    // println!("{}", body);
+    println!("{}", body);
 }
 
 fn load_config() -> Config {
@@ -97,7 +93,7 @@ fn load_config() -> Config {
 
 // Ok to compile here since function will be called just once
 fn get_spotify(body: &str) -> Option<&str> {
-    let re = Regex::new(r"(?mi)Spotify playlist:\n?\[\#\d*\]\n?\((?P<url>.+)\)").unwrap();
+    let re = Regex::new(r"(?mi)Spotify playlist:\s?\n?\[\#\d*\]\s?\n?\((?P<url>.+)\)").unwrap();
     re.captures(body)
         .and_then(|c| c.name("url"))
         .and_then(|u| Some(u.as_str()))
