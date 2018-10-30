@@ -9,6 +9,7 @@ extern crate serde_derive;
 extern crate structopt;
 
 mod config;
+mod music_thread;
 
 use config::Config;
 use rawr::prelude::*;
@@ -36,7 +37,7 @@ fn main() {
     let user = client.user(USER);
     let submissions = user.submissions().expect("error getting user submissions");
 
-    let re = Regex::new(r"(?mi)The (.*)weekly Music Sharing Thread\s?\#?(?P<number>\d*?)").unwrap();
+    let re = Regex::new(r"(?mi)The (.*)weekly Music Sharing Thread\s?\#?(?P<number>\d*)").unwrap();
 
     let mut target = 0;
     let mut target_thread: Option<rawr::structures::submission::Submission<'_>> = None;
@@ -53,9 +54,11 @@ fn main() {
                     Some(n_match) => n_match.as_str().parse::<i32>().unwrap_or(1),
                 };
 
-                if target_thread_num == 0 && thread_num > target {
-                    target = thread_num;
-                    target_thread = Some(submission);
+                if target_thread_num == 0 {
+                    if thread_num > target {
+                        target = thread_num;
+                        target_thread = Some(submission);
+                    }
                 } else if target_thread_num == thread_num {
                     target = thread_num;
                     target_thread = Some(submission);
@@ -64,7 +67,16 @@ fn main() {
             }
         }
     }
-    println!("{}", target_thread.unwrap().title());
+
+    let target_thread = target_thread.expect("No Thread Was Found");
+
+    let mu_thread = music_thread::Thread {
+        number: target,
+        score: target_thread.score(),
+    };
+    println!("{:?}", mu_thread);
+    let body = target_thread.body().expect("Error getting thread body");
+    println!("{}", body);
 }
 
 fn load_config() -> Config {
