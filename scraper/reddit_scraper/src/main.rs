@@ -54,6 +54,13 @@ fn main() {
                     Some(n_match) => n_match.as_str().parse::<i32>().unwrap_or(1),
                 };
 
+                println!(
+                    "{}, {}",
+                    get_spotify(&submission.body().unwrap_or("coudn't get body".to_string()))
+                        .unwrap_or("url not found"),
+                    thread_num
+                );
+
                 if target_thread_num == 0 {
                     if thread_num > target {
                         target = thread_num;
@@ -76,7 +83,7 @@ fn main() {
     };
     println!("{:?}", mu_thread);
     let body = target_thread.body().expect("Error getting thread body");
-    println!("{}", body);
+    // println!("{}", body);
 }
 
 fn load_config() -> Config {
@@ -86,4 +93,12 @@ fn load_config() -> Config {
         .expect("error reading the config file");
 
     toml::from_str(&mut contents).expect("error deserializing config")
+}
+
+// Ok to compile here since function will be called just once
+fn get_spotify(body: &str) -> Option<&str> {
+    let re = Regex::new(r"(?mi)Spotify playlist:\n?\[\#\d*\]\n?\((?P<url>.+)\)").unwrap();
+    re.captures(body)
+        .and_then(|c| c.name("url"))
+        .and_then(|u| Some(u.as_str()))
 }
