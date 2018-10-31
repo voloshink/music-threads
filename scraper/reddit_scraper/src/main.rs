@@ -50,20 +50,19 @@ fn main() {
             }
             Some(captures) => {
                 let num_match = captures.name("number");
-                let thread_num = match num_match {
-                    None => 1,
-                    Some(n_match) => n_match.as_str().parse::<i32>().unwrap_or(1),
-                };
+                let thread_num = num_match
+                    .and_then(|c| c.as_str().parse::<i32>().ok())
+                    .unwrap_or(1);
 
                 if target_thread_num == 0 {
                     if thread_num > target {
                         target = thread_num;
-                        target_thread = Some(submission);
+                        target_thread = next_thread;
+                        next_thread = Some(submission);
                     }
                 } else if target_thread_num == thread_num {
                     target = thread_num;
                     target_thread = Some(submission);
-                    break;
                 } else if target_thread_num + 1 == thread_num {
                     next_thread = Some(submission);
                 }
