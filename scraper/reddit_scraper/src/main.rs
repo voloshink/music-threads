@@ -41,6 +41,7 @@ fn main() {
 
     let mut target = 0;
     let mut target_thread: Option<rawr::structures::submission::Submission<'_>> = None;
+    let mut next = 0;
     let mut next_thread: Option<rawr::structures::submission::Submission<'_>> = None;
     for submission in submissions {
         let title = String::from(submission.title());
@@ -55,10 +56,13 @@ fn main() {
                     .unwrap_or(1);
 
                 if target_thread_num == 0 {
-                    if thread_num > target {
-                        target = thread_num;
+                    if thread_num > next {
+                        next = thread_num;
                         target_thread = next_thread;
+                        target = next - 1;
                         next_thread = Some(submission);
+                    } else if thread_num == target {
+                        target_thread = Some(submission);
                     }
                 } else if target_thread_num == thread_num {
                     target = thread_num;
@@ -71,6 +75,7 @@ fn main() {
     }
 
     let target_thread = target_thread.expect("No Thread Was Found");
+    let next_thread = next_thread.expect("No Next Thread was Found");
 
     let mu_thread = music_thread::Thread {
         number: target,
