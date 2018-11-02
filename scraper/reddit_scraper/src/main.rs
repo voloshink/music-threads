@@ -77,13 +77,17 @@ fn main() {
     let target_thread = target_thread.expect("No Thread Was Found");
     let next_thread = next_thread.expect("No Next Thread was Found");
 
+    let next_thread_body = next_thread.body().expect("Error getting next thread body");
+    let spotify_url = get_spotify(&next_thread_body).expect("Error extracting spotify URL");
+
     let mu_thread = music_thread::Thread {
         number: target,
         score: target_thread.score(),
+        spotify_url,
     };
     println!("{:?}", mu_thread);
-    let body = target_thread.body().expect("Error getting thread body");
-    println!("{}", body);
+    // let body = target_thread.body().expect("Error getting thread body");
+    // println!("{}", body);
 }
 
 fn load_config() -> Config {
