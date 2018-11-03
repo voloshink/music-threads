@@ -6,8 +6,14 @@ pub struct Thread<'a> {
 }
 
 pub struct Submission<'a> {
-    pub genre: &'a str,
-    pub artist: &'a str,
-    pub track: &'a str,
-    pub url: &'a str,
+    pub tracks: Vec<&'a Submission<'a>>,
+    pub user: &'a str,
+    pub score: i64,
+}
+
+pub struct Track<'a> {
+    pub genre: Option<&'a str>,
+    pub artist: Option<&'a str>,
+    pub track: Option<&'a str>,
+    pub url: Option<&'a str>,
 }
