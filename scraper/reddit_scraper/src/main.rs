@@ -7,6 +7,8 @@ extern crate toml;
 extern crate serde_derive;
 #[macro_use]
 extern crate structopt;
+#[macro_use]
+extern crate lazy_static;
 
 mod config;
 mod music_thread;
@@ -86,8 +88,8 @@ fn main() {
         spotify_url,
     };
     println!("{:?}", mu_thread);
-    // let body = target_thread.body().expect("Error getting thread body");
-    // println!("{}", body);
+    let body = target_thread.body().expect("Error getting thread body");
+    println!("{}", body);
 }
 
 fn load_config() -> Config {
@@ -99,10 +101,13 @@ fn load_config() -> Config {
     toml::from_str(&mut contents).expect("error deserializing config")
 }
 
-// Ok to compile here since function will be called just once
 fn get_spotify(body: &str) -> Option<&str> {
-    let re = Regex::new(r"(?mi)Spotify playlist:\s?\n?\[\#\d*\]\s?\n?\((?P<url>.+)\)").unwrap();
-    re.captures(body)
+    lazy_static! {
+        static ref SPOTIFY_REGEX: Regex =
+            Regex::new(r"(?mi)Spotify playlist:\s?\n?\[\#\d*\]\s?\n?\((?P<url>.+)\)").unwrap();
+    }
+    SPOTIFY_REGEX
+        .captures(body)
         .and_then(|c| c.name("url"))
         .and_then(|u| Some(u.as_str()))
 }
