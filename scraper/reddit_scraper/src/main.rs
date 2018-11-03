@@ -90,6 +90,8 @@ fn main() {
     println!("{:?}", mu_thread);
     let body = target_thread.body().expect("Error getting thread body");
     println!("{}", body);
+
+    let post_submissions = get_submissions(&body);
 }
 
 fn load_config() -> Config {
@@ -110,4 +112,40 @@ fn get_spotify(body: &str) -> Option<&str> {
         .captures(body)
         .and_then(|c| c.name("url"))
         .and_then(|u| Some(u.as_str()))
+}
+
+fn get_submissions(body: &str) -> Vec<ParsedSubmission> {
+    lazy_static! {
+        static ref SUBMISSION_REGEX: Regex =
+            Regex::new(r"(?mi)\[\[(?P<genre>.+)\](?P<artist>.+)-(?P<track>.+)\]\((?P<url>.+)\)")
+                .unwrap();
+    }
+    let mut parsed_submissions = Vec::new();
+    for cap in SUBMISSION_REGEX.captures_iter(body) {
+        let genre = cap.name("genre").and_then(|m| Some(m.as_str().trim()));
+        if genre == Some("Genre") {
+            continue;
+        }
+
+        let artist = cap.name("artist").and_then(|m| Some(m.as_str().trim()));
+        let track = cap.name("track").and_then(|m| Some(m.as_str().trim()));
+        let url = cap.name("url").and_then(|m| Some(m.as_str().trim()));
+
+        parsed_submissions.push(ParsedSubmission {
+            genre,
+            artist,
+            track,
+            url,
+        });
+        println!("{:?} | {:?} | {:?} | {:?}", genre, artist, track, url);
+    }
+
+    parsed_submissions
+}
+
+struct ParsedSubmission<'a> {
+    pub genre: Option<&'a str>,
+    pub artist: Option<&'a str>,
+    pub track: Option<&'a str>,
+    pub url: Option<&'a str>,
 }
