@@ -96,7 +96,7 @@ fn main() {
     let post_submission = music_thread::Submission {
         user: &target_thread.author().name,
         created: target_thread.created_utc(),
-        score: target_thread.score(),
+        score: 0,
         submission_string: None,
         tracks: post_tracks,
     };
