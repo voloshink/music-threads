@@ -86,12 +86,22 @@ fn main() {
         number: target,
         score: target_thread.score(),
         spotify_url,
+        created: target_thread.created_utc(),
     };
     println!("{:?}", mu_thread);
     let body = target_thread.body().expect("Error getting thread body");
     println!("{}", body);
 
     let post_tracks = get_tracks(&body);
+    let post_submission = music_thread::Submission {
+        user: &target_thread.author().name,
+        created: target_thread.created_utc(),
+        score: target_thread.score(),
+        submission_string: None,
+        tracks: post_tracks,
+    };
+
+    let mut submissions = vec![post_submission];
 }
 
 fn load_config() -> Config {
