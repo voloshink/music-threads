@@ -6,17 +6,19 @@ pub struct Thread<'a> {
     pub created: i64,
 }
 
-pub struct Submission<'a> {
-    pub tracks: Vec<Track<'a>>,
-    pub user: &'a str,
+#[derive(Debug)]
+pub struct Submission {
+    pub tracks: Vec<Track>,
+    pub user: String,
     pub score: i64,
-    pub submission_string: Option<&'a str>,
+    pub submission_string: Option<String>,
     pub created: i64,
 }
 
-pub struct Track<'a> {
-    pub genre: Option<&'a str>,
-    pub artist: Option<&'a str>,
-    pub track: Option<&'a str>,
-    pub url: Option<&'a str>,
+#[derive(Debug)]
+pub struct Track {
+    pub genre: Option<String>,
+    pub artist: Option<String>,
+    pub track: Option<String>,
+    pub url: Option<String>,
 }

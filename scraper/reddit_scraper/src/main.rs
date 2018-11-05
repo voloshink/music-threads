@@ -15,6 +15,7 @@ mod music_thread;
 
 use config::Config;
 use rawr::prelude::*;
+use rawr::structures::*;
 use regex::Regex;
 use std::fs::File;
 use std::io::prelude::*;
@@ -42,9 +43,9 @@ fn main() {
     let re = Regex::new(r"(?mi)The (.*)weekly Music Sharing Thread\s?\#?(?P<number>\d*)").unwrap();
 
     let mut target = 0;
-    let mut target_thread: Option<rawr::structures::submission::Submission<'_>> = None;
+    let mut target_thread: Option<submission::Submission<'_>> = None;
     let mut next = 0;
-    let mut next_thread: Option<rawr::structures::submission::Submission<'_>> = None;
+    let mut next_thread: Option<submission::Submission<'_>> = None;
     for submission in submissions {
         let title = String::from(submission.title());
         match re.captures(&title) {
@@ -90,11 +91,11 @@ fn main() {
     };
     println!("{:?}", mu_thread);
     let body = target_thread.body().expect("Error getting thread body");
-    println!("{}", body);
+    // println!("{}", body);
 
     let post_tracks = get_tracks(&body);
     let post_submission = music_thread::Submission {
-        user: &target_thread.author().name,
+        user: target_thread.author().name,
         created: target_thread.created_utc(),
         score: 0,
         submission_string: None,
@@ -102,6 +103,8 @@ fn main() {
     };
 
     let mut submissions = vec![post_submission];
+    let comment_list = target_thread.replies().expect("error getting comments");
+    let subs = get_submissions_from_comments(comment_list);
 }
 
 fn load_config() -> Config {
@@ -132,23 +135,49 @@ fn get_tracks(body: &str) -> Vec<music_thread::Track> {
     }
     let mut tracks = Vec::new();
     for cap in SUBMISSION_REGEX.captures_iter(body) {
-        let genre = cap.name("genre").and_then(|m| Some(m.as_str().trim()));
-        if genre == Some("Genre") {
+        let genre = cap
+            .name("genre")
+            .and_then(|m| Some(m.as_str().trim().to_string()));
+        if genre == Some("Genre".to_string()) {
             continue;
         }
+        let artist = cap
+            .name("artist")
+            .and_then(|m| Some(m.as_str().trim().to_string()));
+        let track = cap
+            .name("track")
+            .and_then(|m| Some(m.as_str().trim().to_string()));
+        let url = cap
+            .name("url")
+            .and_then(|m| Some(m.as_str().trim().to_string()));
 
-        let artist = cap.name("artist").and_then(|m| Some(m.as_str().trim()));
-        let track = cap.name("track").and_then(|m| Some(m.as_str().trim()));
-        let url = cap.name("url").and_then(|m| Some(m.as_str().trim()));
-
+        println!("{:?} | {:?} | {:?} | {:?}", &genre, &artist, &track, &url);
         tracks.push(music_thread::Track {
             genre,
             artist,
             track,
             url,
         });
-        println!("{:?} | {:?} | {:?} | {:?}", genre, artist, track, url);
     }
-
     tracks
+}
+
+fn get_submissions_from_comments(
+    comments: comment_list::CommentList<'_>,
+) -> Vec<music_thread::Submission> {
+    let mut submissions = Vec::new();
+    for comment in comments {
+        // get_track_from_submission(comment);
+        let tracks = get_tracks(&comment.body().expect("error getting comment body"));
+        let submission = music_thread::Submission {
+            score: comment.score(),
+            created: comment.created_utc(),
+            user: comment.author().name,
+            submission_string: comment.body(),
+            tracks,
+        };
+        // println!("{:?}", submission);
+        submissions.push(submission);
+    }
+    submissions
 }
